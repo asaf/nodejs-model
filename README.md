@@ -214,4 +214,4 @@ console.log(u1.toJSON('*'));
 ```
 
 
-Update mehtod `someInstance.update(newObj, accessibility) is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
+Update mehtod `someInstance.update(newObj, accessibility)` is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
