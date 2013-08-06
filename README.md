@@ -225,8 +225,28 @@ console.log(u1.toJSON('*'));
 //prints { name: 'foo', password: 'secret', age: 55 }
 ```
 
-
 Update mehtod `someInstance.update(newObj, accessibility)` is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
+
+
+#Initializing Model Instances
+
+It is possible to initialize a model instance by suppliying an `init` method on the Model level,
+
+Here is an example how to initialize a creation date attribute for a model:
+
+```javascript
+var P = model('Person').attr('name').attr('creation_date');
+
+//will be invoked just after a model is instantiated by P.create()
+P.init = function(instance) {
+  instance.creationDate(d);
+};
+
+p1 = P.create();
+
+console.log(p1.creationDate())
+//prints a date
+```
 
 #License
 
