@@ -22,6 +22,16 @@ If one or more of the bullets below makes sense to you, then you should try node
 * Accessibility control: Sometimes your models may contain sensitive data (such as a 'password'/'token' attributes) and you want a simple way to filter such properties based on tags.
 * Events: Events are fired when objects are being created or properties are modified.
 
+
+#Installation
+
+To install nodejs-model, use [npm](http://github.com/isaacs/npm):
+
+```bash
+$ npm install nodejs-model --save
+```
+
+
 # Basic Usage
 
 This is how it works:
@@ -215,3 +225,7 @@ console.log(u1.toJSON('*'));
 
 
 Update mehtod `someInstance.update(newObj, accessibility)` is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
+
+#License
+
+See _LICENSE_ file.
