@@ -160,6 +160,21 @@ describe 'Model creations', ->
             )
         )
 
+    it 'Ensure validation dont fail when having attributes with _', (done) ->
+        P = model("Person").attr('creation_date',
+            validations:
+                precense:
+                    message: 'Required!'
+        )
+
+        p1 = P.create()
+        p1.creationDate new Date()
+        p1.validate().then(() ->
+            Object.keys(p1.errors).should.have.length 0
+            p1.isValid.should.equal true
+            done()
+        )
+
     it 'Validate a model with combined validators', (done) ->
         P = model("Person").attr('name',
             validations:

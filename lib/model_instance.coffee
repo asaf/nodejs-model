@@ -1,6 +1,7 @@
 Q = require 'q'
 s = require 'stampit'
 _ = require 'underscore'
+_s = require 'underscore.string'
 
 model_instance = s().enclose(() ->
     model = @model
@@ -25,7 +26,8 @@ model_instance = s().enclose(() ->
                             validator_options = validators[validator]
 
                             if Validators[validator]
-                                deffers = deffers.concat Validators[validator][validator](@, prop, validator_options)
+                                accessor = _s.camelize prop
+                                deffers = deffers.concat Validators[validator][validator](@, accessor, validator_options)
 
                     Q.allSettled(deffers).then((result) =>
                         @isValid = Object.keys(@errors).length is 0
