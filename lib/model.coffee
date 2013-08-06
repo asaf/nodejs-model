@@ -13,6 +13,9 @@ model = s().enclose(() ->
     @setType = (model_type) ->
         type = model_type
 
+    @init = () ->
+        @
+
     #Create a new model instance from this model definition
     @create = () ->
         eventsPrototype = emitter.prototype
@@ -26,6 +29,7 @@ model = s().enclose(() ->
         staticF = s(model_instance({model: @}))
         objFactory = s.compose(objF, staticF)
         modelInstance = objFactory.create()
+        @init(modelInstance)
         @emit('model:created', modelInstance)
 
         modelInstance

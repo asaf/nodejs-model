@@ -66,6 +66,16 @@ describe 'Model creations', ->
 
         done()
 
+    it 'Initializing model via the init() method', (done) ->
+        P = model('Person').attr('name').attr('creation_date')
+        d = new Date()
+        P.init = (instance) ->
+            instance.creationDate(d)
+
+        p1 = P.create()
+        p1.creationDate().should.equal d
+        done()
+
     it 'Creating a model instance should produce a create event', (done) ->
         P = model('Person')
             .attr('id')
