@@ -1,0 +1,41 @@
+{
+  "name": "nodejs-model",
+  "description": "A simple, minimalistic object model for nodejs",
+  "version": "0.1.3",
+  "keywords": [
+    "model",
+    "schema",
+    "validations"
+  ],
+  "author": {
+    "name": "Asaf Shakarchi",
+    "email": "asaf000@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asaf/nodejs-model"
+  },
+  "bugs": {
+    "url": "https://github.com/asaf/nodejs-model/issues"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/test.coffee",
+    "compile": "rm -rf ./compiled/* ; ./node_modules/coffee-script/bin/coffee -o compiled/ -c lib/"
+  },
+  "main": "module.js",
+  "dependencies": {
+    "validator": "~1.4.0",
+    "coffee-script": "1.4.0",
+    "q": "~0.9.6",
+    "underscore": "~1.5.1",
+    "stampit": "~0.5.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
