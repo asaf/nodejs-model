@@ -6,6 +6,7 @@ emitter = require('events').EventEmitter
 #Model closure
 model = s().enclose(() ->
     type = undefined #a string represents the model type
+    validators = {}
 
     @getType = () ->
         type
@@ -15,6 +16,15 @@ model = s().enclose(() ->
 
     @init = () ->
         @
+
+    @validators = (default_validators) ->
+      if arguments.length is 0
+        validators
+      else
+        validators = default_validators
+
+    @validator = (name, fn) ->
+      validators[name] = fn
 
     #Create a new model instance from this model definition
     @create = (fromObject, accessibility) ->

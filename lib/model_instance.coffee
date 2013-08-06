@@ -1,6 +1,5 @@
 Q = require 'q'
 s = require 'stampit'
-Validators = require './validators'
 _ = require 'underscore'
 
 model_instance = s().enclose(() ->
@@ -8,6 +7,8 @@ model_instance = s().enclose(() ->
     delete @model
 
     @validate = (filter) ->
+        Validators = model.validators()
+
         @errors = {}
         oper = Q.defer()
         deffers = []
