@@ -1,0 +1,10 @@
+language: node_js
+
+# test on latest nodejs 0.10 branch
+node_js:
+    - "0.10"
+
+notifications:
+    email:
+        - "asaf000@gmail.com"
+
