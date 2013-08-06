@@ -176,3 +176,42 @@ length: [2, 4]
 //same as above with custom error messages
 length: { minimum: 2, maximum: 4, messages { tooShort: 'min 3 length!', tooLong: 'max 5 length!' } }
 ```
+
+
+# Accessibility
+
+nodejs-model supports accessibility tagging per defined attribute, when new attribute is defined with no _accessibility_ 
+array defined, it will be tagged as _public_ automatically.
+
+Methods such as toJSON(accessibility_array) or `update(updatedObj, accessibility_array)` are accessbility aware when
+updating or producing model instance output.
+
+
+You can define accessibility tags per attribute by:
+
+``` javascript
+User = model("User").attr('name', {
+  accessibility: ['ui', 'registered']
+}).attr('password', {
+  accessibility: ['private']
+}).attr('age');
+
+u1 = User.create();
+u1.name('foo');
+u1.password('secret');
+u1.age(55);
+
+console.log(u1.toJSON());
+//prints { age: 55 }, this is because invoking toJSON(), it will only create an object with attributes defined
+as public.
+
+console.log(u1.toJSON(['ui', 'private']));
+//prints { name: 'foo', password: 'secret' }
+
+//* means any property with any accessibility
+console.log(u1.toJSON('*'));
+//prints { name: 'foo', password: 'secret', age: 55 }
+```
+
+
+Update mehtod `someInstance.update(newObj, accessibility) is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
