@@ -28,7 +28,9 @@
     "coffee-script": "1.4.0",
     "q": "~0.9.6",
     "underscore": "~1.5.1",
-    "stampit": "~0.5.1"
+    "stampit": "~0.5.1",
+    "chai-extras": "~1.1.0",
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {
     "mocha": "*",

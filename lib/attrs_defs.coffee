@@ -1,4 +1,5 @@
 s = require 'stampit'
+_s = require 'underscore.string'
 
 #Attributes definitions closure
 attrsDefs = s().enclose(() ->
@@ -27,7 +28,8 @@ attrsDefs = s().enclose(() ->
         if not meta.accessibility?
             meta.accessibility = ['public']
 
-        accessors[name] = (value) ->
+        accessorName =  _s.camelize(name)
+        accessors[accessorName] = (value) ->
             #if 0 args its a getter
             if arguments.length is 0
                 @attrs[name]

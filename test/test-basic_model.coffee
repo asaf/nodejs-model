@@ -54,6 +54,18 @@ describe 'Model creations', ->
 
         done()
 
+
+    it 'Accessors for var_with_underscore should be camelized', (done) ->
+        P = model('Person').attr('creation_date')
+        p = P.create()
+        p.should.not.have.method('creation_date')
+        p.should.have.method('creationDate')
+
+        p.creationDate('foo')
+        p.creationDate().should.equal 'foo'
+
+        done()
+
     it 'Creating a model instance should produce a create event', (done) ->
         P = model('Person')
             .attr('id')
