@@ -93,6 +93,19 @@ describe 'Model creations', ->
 
         P.create()
 
+    it 'Create a model instance by supplying existing object', (done) ->
+        Per = model("Person").attr("id").attr("name")
+
+        perObj =
+            id: '1'
+            name: 'foo'
+
+        p1 = Per.create(perObj)
+        p1.id().should.equal '1'
+        p1.name().should.equal 'foo'
+
+        done()
+
 
     it 'Creating multiple model defs / instances should have different scopes', (done) ->
         Per = model("Person").attr("id").attr("name")

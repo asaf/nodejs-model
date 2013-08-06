@@ -17,7 +17,7 @@ model = s().enclose(() ->
         @
 
     #Create a new model instance from this model definition
-    @create = () ->
+    @create = (fromObject, accessibility) ->
         eventsPrototype = emitter.prototype
         objF = s().methods(@getAccessors(), eventsPrototype).state(
             attrs: {}
@@ -30,6 +30,15 @@ model = s().enclose(() ->
         objFactory = s.compose(objF, staticF)
         modelInstance = objFactory.create()
         @init(modelInstance)
+
+        if fromObject
+            if ! accessibility?
+                accessibility = ['public']
+            else if accessibility.constructor isnt Array
+                accessibility = [accessibility]
+            modelInstance.update(fromObject, '*')
+
+
         @emit('model:created', modelInstance)
 
         modelInstance
