@@ -1,5 +1,4 @@
-nodejs-model
-==========
+# nodejs-model
 
 Okay, so you have a node app backed with some kind of NoSQL schema-less DB such as CouchDB and it all works pretty well,
 
@@ -14,8 +13,7 @@ Note: It is heavily inspired by Ruby AcitveObject Validations but is enhanced wi
 as filtering and sanitization.
 
 
-Why use nodejs-model?
-===================
+# Why use nodejs-model?
 
 If one or more of the bullets below makes sense to you, then you should try nodejs-model.
 
@@ -24,8 +22,7 @@ If one or more of the bullets below makes sense to you, then you should try node
 * Accessibility control: Sometimes your models may contain sensitive data (such as a 'password'/'token' attributes) and you want a simple way to filter such properties based on tags.
 * Events: Events are fired when objects are being created or properties are modified.
 
-Basic Usage
-===========
+# Basic Usage
 
 This is how it works:
 
@@ -83,5 +80,41 @@ u1.toJSON('private')
 //produces: { name: 'foo' } { password: 'password' }
 ```
 
+
 Simple as that, your model is enhanced with a validate() method, simply invoke it to validate the model object
 against the validation rules defined in the schema.
+
+
+# Updating Model Instance
+
+Assuming you have a simple model instance (`u1` as defined in the basic example above, you can update it with new data 
+at some point after loading an object from DB / file / JSON / etc:
+
+
+``` javascript
+someObj = {
+  name: 'bar',
+  password: 'newpassword'
+};
+
+u1.update(someObj);
+
+console.log(u1.name());
+//prints bar
+console.log(u1.password());
+//NOTE: prints password
+```
+
+Pay attention that password wasn't updated, this is because when invoking `update(object)` only public attributes (any
+attribute that its _accessibility_ metadata wasnt defined or defined as _['public']_ can be updated.
+
+With this specific example, since _password_'s accessibility is _private_, you can update by suppling the _private_ accessibility
+to the `update()` 2nd parameter as:
+
+``` javascript
+u1.update(someObj, 'private')
+console.log(u1.name());
+//prints bar
+console.log(u1.password());
+//NOTE: prints newpassword
+```
