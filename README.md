@@ -68,7 +68,7 @@ var u1 = User.create();
 u1.name('foo');
 u1.password('password');
 
-u1.name()
+console.log(u1.name());
 //prints _foo_
 
 //Invoke validations and wait for the validations to fulfill
@@ -82,11 +82,11 @@ u1.validate(function() {
 });
 
 //get object as a plain object, ready for JSON
-u1.toJSON();
+console.log(u1.toJSON());
 //produces: { name: 'foo' }
 
 //now also with attributes that their accessibility is 'private'
-u1.toJSON('private')
+console.log(u1.toJSON('private'));
 //produces: { name: 'foo' } { password: 'password' }
 ```
 
