@@ -118,3 +118,61 @@ console.log(u1.name());
 console.log(u1.password());
 //NOTE: prints newpassword
 ```
+
+
+# Validators
+
+## Presence
+
+The _Presence_ ensure that an attribute value is not null or empty string, example:
+
+```javascript
+var User = model("User").attr('name', {
+  validations: {
+    presence: true
+  });
+```
+
+### Options
+
+* `true` - value will be required, default message is set.
+* `message` - string represents the error message if validator fails.
+
+Example with custom message:
+
+```javascript
+validations: {
+  presence: {
+    message: 'Name is required!'
+  }
+}
+```
+
+## Length
+
+Validates rules of the length of a property value.
+
+### Options
+
+* `is` keyword or `number` - An exact length
+* `array` - Will expand to `minimum` and `maximum`. First element is the lower bound, second element is the upper bound.
+* `allowBlank` - Validation is skipped if equal to `true` and value is empty
+* `minimum` - Minimum length of the value allowed
+* `maximum` - Maximum length of the value allowed
+
+### Messages
+  * `wrongLength` - any string represents the error message if `is`/`number` validation fails.
+  * `tooShort` - any string represents the error message if `minimum` validation fails.
+  * `tooLong` - any string represents the error message if `maximum` validation fails.
+
+```javascript
+// Examples of is, both are equal, exact 3 length match
+length: 3
+length: {is: 3}
+//same as above, but empty string is allowed
+length: { is: 3, allowBlank: true } 
+//min legnth: 2, max length: 4
+length: [2, 4]
+//same as above with custom error messages
+length: { minimum: 2, maximum: 4, messages { tooShort: 'min 3 length!', tooLong: 'max 5 length!' } }
+```
