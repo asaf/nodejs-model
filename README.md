@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/asaf/nodejs-model.png?branch=master)](https://travis-ci.org/asaf/nodejs-model)
+
 # nodejs-model
 
 Okay, so you have a node app backed with some kind of NoSQL schema-less DB such as CouchDB and it all works pretty well,
