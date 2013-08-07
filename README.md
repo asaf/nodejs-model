@@ -189,6 +189,20 @@ length: [2, 4]
 length: { minimum: 2, maximum: 4, messages { tooShort: 'min 3 length!', tooLong: 'max 5 length!' } }
 ```
 
+## Format
+
+Regexp test validator
+
+## Options
+
+* `with` - the regular expression to test
+* `allowBlank` - Validation is skipped if equal to `true` and value is empty
+* `message` - any string represents the error message.
+
+```javascript
+// Examples
+format: { with: /^\d*$/, allowBlank: true, message: 'only digits are allowed, or empty string.'  }
+```
 
 # Accessibility
 
