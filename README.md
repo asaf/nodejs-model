@@ -248,6 +248,13 @@ console.log(p1.creationDate())
 //prints a date
 ```
 
+#More Info
+Check wiki pages:
+
+[Custom Validator per Model](https://github.com/asaf/nodejs-model/wiki/Custom-Validator-per-Model)
+
+
+
 #Contributers
 
 * [amitpaz](https://github.com/amitpaz) - Co author, design, tests, etc.
