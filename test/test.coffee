@@ -4,5 +4,6 @@ chai.use extras
 chai.should()
 require './validators/test-presence'
 require './validators/test-length'
+require './validators/test-format'
 require './test-basic_model'
 require './test-custom_validators'
