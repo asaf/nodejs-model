@@ -1,8 +1,6 @@
 u = require 'util'
 model = require '../lib/index'
 
-#m = require '../lib/model'
-
 describe 'Model creations', ->
     it 'model should be a factory function', (done) ->
         if typeof(model) is 'function'
