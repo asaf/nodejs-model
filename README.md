@@ -248,6 +248,10 @@ console.log(p1.creationDate())
 //prints a date
 ```
 
+#Contributers
+
+* [amitpaz](https://github.com/amitpaz) - Co author, design, tests, etc.
+
 #Contributions
 
 You can contribue in few ways:
