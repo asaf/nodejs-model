@@ -248,6 +248,14 @@ console.log(p1.creationDate())
 //prints a date
 ```
 
+#Contributions
+
+You can contribue in few ways:
+
+* Just use the module, this is the open source way, right? more usages, more stable and robust the model will be.
+* Star it! :) - if you'r happy with it and find it useful.
+* Code, if you are a coder and would like to contribute code then visit the Development page.
+
 #License
 
 See _LICENSE_ file.
