@@ -193,7 +193,7 @@ length: { minimum: 2, maximum: 4, messages { tooShort: 'min 3 length!', tooLong:
 
 Regexp test validator
 
-## Options
+### Options
 
 * `with` - the regular expression to test
 * `allowBlank` - Validation is skipped if equal to `true` and value is empty
