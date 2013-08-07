@@ -254,7 +254,7 @@ console.log(p1.creationDate())
 
 #Contributions
 
-You can contribue in few ways:
+You can contribute in few ways:
 
 * Just use the module, this is the open source way, right? more usages, more stable and robust the model will be.
 * Star it! :) - if you'r happy with it and find it useful.
