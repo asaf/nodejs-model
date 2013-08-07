@@ -25,9 +25,9 @@ model_instance = s().enclose(() ->
                     for validator of validators
                             validator_options = validators[validator]
 
-                            if Validators[validator]
+                            if Validators[validator]? and typeof Validators[validator] is 'function'
                                 accessor = _s.camelize prop
-                                deffers = deffers.concat Validators[validator][validator](@, accessor, validator_options)
+                                deffers = deffers.concat Validators[validator](@, accessor, validator_options)
 
             Q.allSettled(deffers).then((result) =>
                 @isValid = Object.keys(@errors).length is 0
