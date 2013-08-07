@@ -29,10 +29,10 @@ model_instance = s().enclose(() ->
                                 accessor = _s.camelize prop
                                 deffers = deffers.concat Validators[validator][validator](@, accessor, validator_options)
 
-                    Q.allSettled(deffers).then((result) =>
-                        @isValid = Object.keys(@errors).length is 0
-                        oper.resolve()
-                    )
+            Q.allSettled(deffers).then((result) =>
+                @isValid = Object.keys(@errors).length is 0
+                oper.resolve()
+            )
         oper.promise
 
     @getType = () ->
