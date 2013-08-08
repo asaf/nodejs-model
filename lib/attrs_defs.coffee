@@ -14,7 +14,7 @@ attrsDefs = s().enclose(() ->
     Define a new attribute
 
     @param {String} name attribute name
-    @param {Object} meta metadata of the defined attribute including validations rules, sanitization, accessibility, etc.
+    @param {Object} meta metadata of the defined attribute including validations rules, sanitization, tags, etc.
     @return {Function} self
     @api public
     ###
@@ -24,9 +24,9 @@ attrsDefs = s().enclose(() ->
             attrsDefsHash[name].primaryKey = true
             primaryKey = name
 
-        #handle accessibility
-        if not meta.accessibility?
-            meta.accessibility = ['public']
+        #handle tags
+        if not meta.tags?
+            meta.tags = ['default']
 
         accessorName =  _s.camelize(name)
         accessors[accessorName] = (value) ->

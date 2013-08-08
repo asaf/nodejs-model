@@ -106,7 +106,6 @@ describe 'Model creations', ->
 
         done()
 
-
     it 'Creating multiple model defs / instances should have different scopes', (done) ->
         Per = model("Person").attr("id").attr("name")
         Post = model("Post").attr("id").attr("body").attr("created_at")
@@ -225,7 +224,7 @@ describe 'Model creations', ->
 
     it 'Test TOJSON', (done) ->
         P = model("User").attr("password",
-            accessibility: ['private']
+            tags: ['private']
         ).attr("name")
 
         p1 = P.create()
@@ -234,6 +233,7 @@ describe 'Model creations', ->
         p1.toJSON().should.deep.equal {name: 'foo'}
         p1.toJSON('private').should.deep.equal {password: 'secret'}
         p1.toJSON('*').should.deep.equal {password: 'secret', name: 'foo'}
+        p1.toJSON('!private').should.deep.equal {name: 'foo'}
         p1.toJSON('none').should.deep.equal {}
 
         done()
@@ -241,7 +241,7 @@ describe 'Model creations', ->
     it 'Update model instance via update()', (done) ->
         P = model("Person").attr('name').attr('age')
         .attr('password',
-            accessibility: ['private']
+            tags: ['private']
         )
 
         p1 = P.create()
@@ -287,4 +287,4 @@ describe 'Model creations', ->
         p1.isNew().should.equal false
 
         done()
-
+    ###

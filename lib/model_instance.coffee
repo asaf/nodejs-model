@@ -2,6 +2,7 @@ Q = require 'q'
 s = require 'stampit'
 _ = require 'underscore'
 _s = require 'underscore.string'
+u = require './utils'
 
 model_instance = s().enclose(() ->
     model = @model
@@ -82,34 +83,25 @@ model_instance = s().enclose(() ->
     @addError = (attr, message) ->
         @errors[attr] = (@errors[attr] || []).concat(message)
 
-    @update = (object, accessibility) ->
-        if ! accessibility?
-            accessibility = ['public']
-        else if accessibility.constructor isnt Array
-            accessibility = [accessibility]
-
+    @update = (object, tags) ->
         attrsDefs = model.attrsDefs()
-        for p of object
-            if not attrsDefs[p]
+
+        for attrName of object
+            if not attrsDefs[attrName]
               continue
-            if _.contains(accessibility, '*') or _.intersection(attrsDefs[p].accessibility, accessibility).length > 0
-                @attrs[p] = object[p]
+
+            if u.isAttributeMatchesTags model, attrName, tags
+                @attrs[attrName] = object[attrName]
 
         @
 
 
-    @toJSON = (accessibility) ->
-        if ! accessibility?
-            accessibility = ['public']
-        else if accessibility.constructor isnt Array
-            accessibility = [accessibility]
-
+    @toJSON = (tags) ->
         attrsToReturn = {}
-        attrsDefs = model.attrsDefs()
 
-        for attr of @attrs
-            if _.contains(accessibility, '*') or _.intersection(attrsDefs[attr].accessibility, accessibility).length > 0
-                attrsToReturn[attr] = @attrs[attr]
+        for attrName of @attrs
+            if u.isAttributeMatchesTags model, attrName, tags
+                attrsToReturn[attrName] = @attrs[attrName]
 
         attrsToReturn
     @

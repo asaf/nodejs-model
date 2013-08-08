@@ -1,4 +1,5 @@
 attrsDefs = require './attrs_defs'
+u = require './utils'
 model_instance = require './model_instance'
 s = require 'stampit'
 emitter = require('events').EventEmitter
@@ -27,7 +28,7 @@ model = s().enclose(() ->
       validators[name] = fn
 
     #Create a new model instance from this model definition
-    @create = (fromObject, accessibility) ->
+    @create = (fromObject, tags) ->
         eventsPrototype = emitter.prototype
         objF = s().methods(@getAccessors(), eventsPrototype).state(
             attrs: {}
@@ -42,11 +43,11 @@ model = s().enclose(() ->
         @init(modelInstance)
 
         if fromObject
-            if ! accessibility?
-                accessibility = ['public']
-            else if accessibility.constructor isnt Array
-                accessibility = [accessibility]
-            modelInstance.update(fromObject, '*')
+            #no tags mean any
+            if not tags?
+                tags = '*'
+
+            modelInstance.update(fromObject, tags)
 
 
         @emit('model:created', modelInstance)
