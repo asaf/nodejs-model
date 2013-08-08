@@ -258,3 +258,21 @@ describe 'Model creations', ->
         p1.password().should.equal 'secret'
 
         done()
+
+    it 'Ensure undefined attributes are not causing errors nor updating the model', (done) ->
+        P = model("Person").attr('name')
+        p1 = P.create()
+        p1.name 'foo'
+
+        newObj =
+          name: 'bar'
+          other: 'baz'
+
+        p1.update(newObj, '*')
+        p1.name().should.equal 'bar'
+        if p1.other isnt undefined
+          throw 'Expected p1.other to be undefined!'
+        p1.attrs.should.not.have.property('other')
+
+        done()
+

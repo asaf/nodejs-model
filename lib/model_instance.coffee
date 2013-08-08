@@ -83,6 +83,8 @@ model_instance = s().enclose(() ->
 
         attrsDefs = model.attrsDefs()
         for p of object
+            if not attrsDefs[p]
+              continue
             if _.contains(accessibility, '*') or _.intersection(attrsDefs[p].accessibility, accessibility).length > 0
                 @attrs[p] = object[p]
 
