@@ -54,6 +54,16 @@ describe 'Model creations', ->
 
         done()
 
+    it 'Setting an attribute to null should delete the attribute from the model instance', (done) ->
+        P = model("Person").attr('name')
+
+        p1 = P.create()
+        p1.name('foo')
+        p1.attrs.should.contain.property('name', 'foo')
+        p1.name(null)
+        p1.attrs.should.not.contain.property('name')
+        done()
+
 
     it 'Accessors for var_with_underscore should be camelized', (done) ->
         P = model('Person').attr('creation_date')

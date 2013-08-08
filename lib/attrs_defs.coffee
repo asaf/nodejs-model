@@ -35,8 +35,12 @@ attrsDefs = s().enclose(() ->
                 @attrs[name]
             else
             #otherwise its a setter
-                @dirty[name] = value
-                @attrs[name] = value
+                if value is null
+                    @dirty[name] = value
+                    delete @attrs[name]
+                else
+                    @dirty[name] = value
+                    @attrs[name] = value
                 @
 
         @
