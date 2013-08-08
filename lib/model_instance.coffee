@@ -6,6 +6,13 @@ _s = require 'underscore.string'
 model_instance = s().enclose(() ->
     model = @model
     delete @model
+    isNew = true
+
+    @isNew = () ->
+        isNew
+
+    @setNew = (val) ->
+        if val then isNew = true else isNew = false
 
     @validate = (filter) ->
         canValidate = (options, validator) =>

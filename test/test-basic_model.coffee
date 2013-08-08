@@ -46,6 +46,8 @@ describe 'Model creations', ->
         if p.id() isnt undefined
             throw 'p.id() Should be undefined!'
         p.id('1').name('foo')
+        #By default models instances are indicated as new
+        p.isNew().should.equal true
 
         p.id().should.equal '1'
         p.name().should.equal 'foo'
@@ -273,6 +275,16 @@ describe 'Model creations', ->
         if p1.other isnt undefined
           throw 'Expected p1.other to be undefined!'
         p1.attrs.should.not.have.property('other')
+
+        done()
+
+    it 'Ensure set model.isNew to false works', (done) ->
+        P = model("Person").attr('name')
+        p1 = P.create()
+
+        p1.isNew().should.equal true
+        p1.setNew(false)
+        p1.isNew().should.equal false
 
         done()
 
