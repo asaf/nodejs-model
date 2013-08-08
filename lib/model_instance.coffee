@@ -8,6 +8,40 @@ model_instance = s().enclose(() ->
     delete @model
 
     @validate = (filter) ->
+        canValidate = (options, validator) =>
+            #if options is an object then seek the 'if' fn as the object's property
+            if typeof (options) is "object"
+                if options["if"]
+                    #options[if] is a function, execute it.
+                    if typeof (options.if) is "function"
+                        options.if @, validator
+                    #options[if] is a string
+                    else if typeof (options.if) is "string"
+                        #is the current model instance has a direct method that corresponds to the options[if] value?
+                        if typeof (@[options.if]) is "function"
+                            @[options.if]()
+                        #otherwise try as a property
+                        else if typeof @[options]["if"]() is "function"
+                            @[options].if()
+                        #We cant find how to handle the if criteria, then for safety validator should be executed
+                        else
+                            true
+                #Same logic but '!' should be for unless as 'if' above
+                else if options.unless
+                    if typeof (options.unless) is "function"
+                        not options.unless @, validator
+                    else if typeof (options.unless) is "string"
+                        if typeof (@[options.unless]) is "function"
+                            not @[options.unless]()
+                        else if typeof @[options]["unless"]() is "function"
+                            not @[options].unless()
+                #there is no if/unless properties in the validator options hash then validator should be executed
+                else
+                    true
+            #in case options is not an object the validator should be executed
+            else
+                true
+
         Validators = model.validators()
 
         @errors = {}
@@ -24,10 +58,10 @@ model_instance = s().enclose(() ->
                 if validators?
                     for validator of validators
                             validator_options = validators[validator]
-
-                            if Validators[validator]? and typeof Validators[validator] is 'function'
-                                accessor = _s.camelize prop
-                                deffers = deffers.concat Validators[validator](@, accessor, validator_options)
+                            if canValidate validator_options, validators[validator]
+                                if Validators[validator]? and typeof Validators[validator] is 'function'
+                                    accessor = _s.camelize prop
+                                    deffers = deffers.concat Validators[validator](@, accessor, validator_options)
 
             Q.allSettled(deffers).then((result) =>
                 @isValid = Object.keys(@errors).length is 0
