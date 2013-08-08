@@ -4,15 +4,15 @@
 
 Okay, so you have a node app backed with some kind of NoSQL schema-less DB such as CouchDB and it all works pretty well,
 
-But hey, even though schema-less is very cool and produces fast results, for small apps it makes sense, but while application code
-grows more and more, you will end with low data integrity and things will start to become messy,
+But hey, even though schema-less is very cool and produces fast results, for small apps it may make sense, but as application 
+code grows bigger and bigger, you will eventually end with low data integrity and things will start to become messy,
 
+So this is what nodejs-model is for, it is a very minimal, extensible model structure for node, it doesn't dictate any 
+DB requirements nor hook into it directly, it's just a plain javascript object with some enhanced capabilities for 
+attributes accessors, validations, tagging and filtering.
 
-So this is what nodejs-model is for, its a super minimal, extensible model structure for node, it doesn't dictate any requirements
-on the DB level, it's just a plain javascript object with some enhanced capabilities for validations and filtering.
-
-Note: It is heavily inspired by Ruby AcitveObject Validations but is enhanced with more capabilities than validations such
-as filtering and sanitization.
+Note: If you are aware of Ruby AcitveObject Validations you will probably find some common parts with the 
+validation capability of it, But _nodejs-model_ goes much further, read on :-)
 
 
 # Why use nodejs-model?
@@ -21,9 +21,9 @@ If one or more of the bullets below makes sense to you, then you should try node
 
 * Model attributes: A lightweight javascript model with simple accessors.
 * Attribute validations: define validation rules per defined attribute.
-* Accessibility control: Sometimes your models may contain sensitive data (such as a 'password'/'token' attributes) and you want a simple way to filter such properties based on tags.
+* Accessibility via tags: Tag attributes with some labels, then allow retrieving/updating only attributes that matches some tags.
 * Events: Events are fired when objects are being created or properties are modified.
-
+* Converters: Simply hook converters into attributes, for example an encryptor converter may attach to the _password_ attribute of a _User_ model to encrypt the user's password immediately after it is set with new value.
 
 #Installation
 
@@ -62,7 +62,7 @@ var User = model("User").attr('name', {
     }
   },
   //this tags the accessibility as _private_
-  accessibility: ['private']
+  tags: ['private']
 });
 
 var u1 = User.create();
@@ -87,7 +87,7 @@ u1.validate(function() {
 console.log(u1.toJSON());
 //produces: { name: 'foo' }
 
-//now also with attributes that their accessibility is 'private'
+//now also with attributes that were tagged with 'private'
 console.log(u1.toJSON('private'));
 //produces: { name: 'foo' } { password: 'password' }
 ```
@@ -118,9 +118,9 @@ console.log(u1.password());
 ```
 
 Pay attention that password wasn't updated, this is because when invoking `update(object)` only public attributes (any
-attribute that its _accessibility_ metadata wasnt defined or defined as _['public']_ can be updated.
+attribute that its _tags_ metadata wasnt defined or defined as _['default']_ can be updated.
 
-With this specific example, since _password_'s accessibility is _private_, you can update by suppling the _private_ accessibility
+With this specific example, since _password_ is tagged with _private_, you can update by suppling the _private_ tag
 to the `update()` 2nd parameter as:
 
 ``` javascript
@@ -204,22 +204,22 @@ Regexp test validator
 format: { with: /^\d*$/, allowBlank: true, message: 'only digits are allowed, or empty string.'  }
 ```
 
-# Accessibility
+# Tags
 
-nodejs-model supports accessibility tagging per defined attribute, when new attribute is defined with no _accessibility_ 
-array defined, it will be tagged as _public_ automatically.
+nodejs-model supports tags per defined attribute, when new attribute is defined with no _tags_ it will be automatically
+tagged with the _default_ tag.
 
-Methods such as toJSON(accessibility_array) or `update(updatedObj, accessibility_array)` are accessbility aware when
+Methods such as toJSON(tags_array) or `update(updatedObj, tags_array)` are accessbility aware when
 updating or producing model instance output.
 
 
-You can define accessibility tags per attribute by:
+You can define tags per attribute by:
 
 ``` javascript
 User = model("User").attr('name', {
-  accessibility: ['ui', 'registered']
+  tags: ['ui', 'registered']
 }).attr('password', {
-  accessibility: ['private']
+  tags: ['private']
 }).attr('age');
 
 u1 = User.create();
@@ -234,12 +234,12 @@ as public.
 console.log(u1.toJSON(['ui', 'private']));
 //prints { name: 'foo', password: 'secret' }
 
-//* means any property with any accessibility
+//* means any property with any tags
 console.log(u1.toJSON('*'));
 //prints { name: 'foo', password: 'secret', age: 55 }
 ```
 
-Update mehtod `someInstance.update(newObj, accessibility)` is also _accessibility-aware_ as with `someInstance.toJSON(accessibility)`.
+Update mehtod `someInstance.update(newObj, tags)` is also _tags-aware_ as with `someInstance.toJSON(tags)`.
 
 
 #Initializing Model Instances
