@@ -265,8 +265,8 @@ console.log(p1.creationDate())
 #More Info
 Check wiki pages:
 
-[Custom Validator per Model](https://github.com/asaf/nodejs-model/wiki/Custom-Validator-per-Model)
-
+* [Custom Validator per Model](https://github.com/asaf/nodejs-model/wiki/Custom-Validator-per-Model)
+* [Conditional Validator](https://github.com/asaf/nodejs-model/wiki/Conditional-Validator)
 
 
 #Contributers
