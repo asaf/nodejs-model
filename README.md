@@ -74,14 +74,13 @@ console.log(u1.name());
 //prints _foo_
 
 //Invoke validations and wait for the validations to fulfill
-u1.validate(function() {
-  if u1.isValid {
-     //validated, perform business logic
-  } else {
-     //validation failed, dump validation errors to the console
-     console.log(p1.errors)
-  }
-});
+u1.validate();
+if (u1.isValid) {
+  //validated, perform business logic
+} else {
+  //validation failed, dump validation errors to the console
+  console.log(u1.errors);
+}
 
 //get object as a plain object, ready for JSON
 console.log(u1.toJSON());
