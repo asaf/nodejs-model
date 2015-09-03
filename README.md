@@ -74,12 +74,12 @@ console.log(u1.name());
 //prints _foo_
 
 //Invoke validations and wait for the validations to fulfill
-u1.validate(function() {
-  if u1.isValid {
-     //validated, perform business logic
+u1.validate().then(function () {
+  if (u1.isValid) {
+    //validated, perform business logic
   } else {
-     //validation failed, dump validation errors to the console
-     console.log(p1.errors)
+    //validation failed, dump validation errors to the console
+    console.log(u1.errors);
   }
 });
 
